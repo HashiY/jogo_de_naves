@@ -25,6 +25,18 @@ function start() {
     var perdidos = 0;
     var energiaAtual = 3;
 
+    //Variaveis de som
+    var somDisparo = document.getElementById("somDisparo");
+    var somExplosao = document.getElementById("somExplosao");
+    var musica = document.getElementById("musica");
+    var somGameover = document.getElementById("somGameover");
+    var somPerdido = document.getElementById("somPerdido");
+    var somResgate = document.getElementById("somResgate");
+
+    //Muica em loop
+    musica.addEventListener("ended", function(){ musica.currentTime = 0; musica.play(); }, false);
+    musica.play();
+
     //Verifica se o usuaio pressionou alguma tecla	
 	$(document).keydown(function(e){ //se precinou alguma
         jogo.pressionou[e.which] = true;
@@ -123,6 +135,7 @@ function start() {
 
     function disparo() {
         if (podeAtirar == true) {
+            somDisparo.play();
             podeAtirar = false;
             //saber a posicao do jogador
             topo = parseInt($("#jogador").css("top"))
@@ -221,6 +234,7 @@ function start() {
         // jogador com o amigo
         if (colisao5.length > 0) {
             salvos++;
+            somResgate.play();
             reposicionaAmigo();
             $("#amigo").remove();
         }
@@ -241,6 +255,7 @@ function start() {
 
     //Explosao 1
     function explosao1(inimigo1X,inimigo1Y) {
+        somExplosao.play();
         //criando div
         $("#fundoGame").append("<div id='explosao1'></div");
         //colocando img de explosao
@@ -277,6 +292,7 @@ function start() {
 
     //Explosao 2
 	function explosao2(inimigo2X,inimigo2Y) {
+        somExplosao.play();
 	    //criando div
         $("#fundoGame").append("<div id='explosao2'></div");
         $("#explosao2").css("background-image", "url(imgs/explosao.png)");
@@ -310,6 +326,7 @@ function start() {
 
     //Explosao 3
     function explosao3(amigoX,amigoY) {
+        somPerdido.play();
         //cria div
         $("#fundoGame").append("<div id='explosao3' class='anima5'></div");
         $("#explosao3").css("top",amigoY);
