@@ -146,11 +146,43 @@ function start() {
 
     function colisao() {        // do jQuery
         var colisao1 = ($("#jogador").collision($("#inimigo1")));
+        
         // jogador com o inimigo1
-    
-        console.log(colisao1);
-    
+        if (colisao1.length > 0) {
+		
+            inimigo1X = parseInt($("#inimigo1").css("left"));
+            inimigo1Y = parseInt($("#inimigo1").css("top"));
+            //explosao na posicao do inimigo1
+            explosao1(inimigo1X,inimigo1Y);
+
+            //reposiciona o inimigo1
+            posicaoY = parseInt(Math.random() * 334);
+            $("#inimigo1").css("left",694);
+            $("#inimigo1").css("top",posicaoY);
+        }
     } //Fim da funcao colisao()
+
+    //Explosao 1
+    function explosao1(inimigo1X,inimigo1Y) {
+        //criando div
+        $("#fundoGame").append("<div id='explosao1'></div");
+        //colocando img de explosao
+        $("#explosao1").css("background-image", "url(imgs/explosao.png)");
+        var div = $("#explosao1");
+        //posicao de onde vai aparecer 
+        div.css("top", inimigo1Y);
+        div.css("left", inimigo1X);
+        //vai crescer ate 200 e vai diminuindo ate 0
+        div.animate({width:200, opacity:0}, "slow");
+        
+        var tempoExplosao = window.setInterval(removeExplosao, 1000);
+        // removendo
+		function removeExplosao() {
+			div.remove();
+			window.clearInterval(tempoExplosao);
+			tempoExplosao = null;
+		}
+	} // Fim da funcao explosao1()
 
 }
 
