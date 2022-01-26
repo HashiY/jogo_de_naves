@@ -359,8 +359,29 @@ function start() {
             $("#energia").css("background-image", "url(imgs/energia0.png)");
     
             //Game Over
+            gameOver();
         }
     } // Fim da funcao energia()
+
+    //Funcao GAME OVER
+	function gameOver() {
+        fimdejogo = true;
+        musica.pause();
+        somGameover.play();
+        
+        //Parar o loop
+        window.clearInterval(jogo.timer);
+        jogo.timer = null;
+        
+        $("#jogador").remove();
+        $("#inimigo1").remove();
+        $("#inimigo2").remove();
+        $("#amigo").remove();
+        
+        //Cria a div de Game Over
+        $("#fundoGame").append("<div id='fim'></div>");
+        $("#fim").html("<h1> Game Over </h1><p>Sua pontua鈬o foi: " + pontos + "</p>" + "<div id='reinicia' onClick=reiniciaJogo()><h3>Jogar Novamente</h3></div>");
+    } // Fim da funcao gameOver();
 
 }//Fim da funcao start
 
