@@ -5,6 +5,8 @@ function start() {
 	$("#fundoGame").append("<div id='inimigo1' class='anima2'></div>");
 	$("#fundoGame").append("<div id='inimigo2' class='anima4'></div>");
 	$("#fundoGame").append("<div id='amigo' class='anima3'></div>");
+    $("#fundoGame").append("<div id='placar'></div>");
+    
 
     //Principais variaveis do jogo
     var fimdejogo = false;
@@ -17,8 +19,10 @@ function start() {
         S: 83,
         D: 68
     }
-    
     jogo.pressionou = [];
+    var pontos = 0;
+    var salvos = 0;
+    var perdidos = 0;
 
     //Verifica se o usuaio pressionou alguma tecla	
 	$(document).keydown(function(e){ //se precinou alguma
@@ -40,6 +44,7 @@ function start() {
         moveinimigo2();
         moveamigo();
         colisao();
+        placar();
 
     } // Fim da funcao loop()
 
@@ -178,7 +183,9 @@ function start() {
         }	
 
         // Disparo com o inimigo1
-        if (colisao3.length>0) {
+        if (colisao3.length > 0) {
+            pontos = pontos + 100;
+
             inimigo1X = parseInt($("#inimigo1").css("left"));
             inimigo1Y = parseInt($("#inimigo1").css("top"));
             explosao1(inimigo1X,inimigo1Y);
@@ -191,7 +198,9 @@ function start() {
         }
 
         // Disparo com o inimigo2
-        if (colisao4.length>0) {
+        if (colisao4.length > 0) {
+            pontos = pontos + 50;
+
             inimigo2X = parseInt($("#inimigo2").css("left"));
             inimigo2Y = parseInt($("#inimigo2").css("top"));
             $("#inimigo2").remove();
@@ -203,13 +212,16 @@ function start() {
         }
     
         // jogador com o amigo
-        if (colisao5.length>0) {
+        if (colisao5.length > 0) {
+            salvos++;
             reposicionaAmigo();
             $("#amigo").remove();
         }
     
         //Inimigo2 com o amigo
-        if (colisao6.length>0) {
+        if (colisao6.length > 0) {
+            perdidos++;
+
             amigoX = parseInt($("#amigo").css("left"));
             amigoY = parseInt($("#amigo").css("top"));
             explosao3(amigoX,amigoY);
@@ -302,8 +314,11 @@ function start() {
             window.clearInterval(tempoExplosao3);
             tempoExplosao3 = null;
         }
-     } // Fim da funcao explosao3
+    } // Fim da funcao explosao3
     
+    function placar() {
+	    $("#placar").html("<h2> Pontos: " + pontos + " Salvos: " + salvos + " Perdidos: " + perdidos + "</h2>");
+    } //fim da fun鈬o placar()
 
 }//Fim da funcao start
 
