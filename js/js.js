@@ -13,6 +13,7 @@ function start() {
     var podeAtirar = true;
     var jogo = {}
     var velocidade = 5;
+    var velocidade2 = 3;
     var posicaoY = parseInt(Math.random() * 334); // entre 0 a 334
     var TECLA = {
         W: 87,
@@ -107,15 +108,16 @@ function start() {
             
         //recria para aparecer novamente
         if (posicaoX <= 0) {
-        posicaoY = parseInt(Math.random() * 334);
-        $("#inimigo1").css("left",694);
-        $("#inimigo1").css("top",posicaoY);
+            velocidade = velocidade + 0.4;
+            posicaoY = parseInt(Math.random() * 334);
+            $("#inimigo1").css("left",694);
+            $("#inimigo1").css("top",posicaoY);
         }
     } //Fim da funco moveinimigo1()
 
     function moveinimigo2() {
         posicaoX = parseInt($("#inimigo2").css("left"));
-	    $("#inimigo2").css("left",posicaoX-3);//esuerda
+	    $("#inimigo2").css("left",posicaoX-velocidade2);//esuerda
 
 		//reposiciona		
 		if (posicaoX <= 0) {
@@ -204,7 +206,7 @@ function start() {
         // Disparo com o inimigo1
         if (colisao3.length > 0) {
             pontos = pontos + 100;
-            velocidade = velocidade + 0.3;
+            velocidade = velocidade + 0.4;
 
             inimigo1X = parseInt($("#inimigo1").css("left"));
             inimigo1Y = parseInt($("#inimigo1").css("top"));
@@ -220,6 +222,7 @@ function start() {
         // Disparo com o inimigo2
         if (colisao4.length > 0) {
             pontos = pontos + 50;
+            velocidade2 = velocidade2 + 0.8;
 
             inimigo2X = parseInt($("#inimigo2").css("left"));
             inimigo2Y = parseInt($("#inimigo2").css("top"));
@@ -237,11 +240,16 @@ function start() {
             somResgate.play();
             reposicionaAmigo();
             $("#amigo").remove();
+
+            if(energiaAtual < 3 && (salvos%5 == 0)){
+                energiaAtual++;
+            }
         }
     
         //Inimigo2 com o amigo
         if (colisao6.length > 0) {
             perdidos++;
+            velocidade2 = velocidade2 + 0.4;
 
             amigoX = parseInt($("#amigo").css("left"));
             amigoY = parseInt($("#amigo").css("top"));
